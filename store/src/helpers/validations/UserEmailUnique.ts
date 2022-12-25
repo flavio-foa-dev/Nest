@@ -4,9 +4,9 @@ import { UserRepository } from "src/domain/Users./users.repository";
 
 @Injectable()
 @ValidatorConstraint({async: true})
-export class EmaiUniqueValidator implements ValidatorConstraintInterface {
+export class EmailUniqueValidator implements ValidatorConstraintInterface {
 
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}  //injetct depency Repository
 
   async validate(valueEmail: string, validationArguments?: ValidationArguments): Promise<boolean> {
     const userEmailExist = await this.userRepository.getUsersByEmail(valueEmail);
@@ -21,7 +21,7 @@ export const IsEmailUnique = (optionsValidetion: ValidationOptions) => {
       propertyName: property,
       options: optionsValidetion,
       constraints: [],
-      validator: EmaiUniqueValidator
+      validator: EmailUniqueValidator
     });
   }
 }
