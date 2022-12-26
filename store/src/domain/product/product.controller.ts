@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from "@nestjs/common"
 import { CreateproductDTO } from "./dto/createdProduct";
-import { ProductRepository } from "./productor.retpsitory";
+import { ProductRepository } from "./productor.repository";
 
 type  Product = {
   name: string,
