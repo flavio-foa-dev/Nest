@@ -3,7 +3,8 @@ import { Injectable } from "@nestjs/common";
 type User = {
   name: string,
   email: string,
-  password: string
+  password: string,
+  id?: number
 
 }
 
@@ -13,7 +14,8 @@ export class UserRepository {
 
 
   async save(user: User): Promise<void> {
-    this.users.push(user);
+    const id = Math.ceil(Math.random() *1000 )
+    this.users.push(Object.assign(user, { id: id }));
   }
 
   getUsersAll(): Array<User> {
