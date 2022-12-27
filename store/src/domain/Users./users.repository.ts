@@ -18,18 +18,31 @@ export class UserRepository {
     return result !== undefined;
   }
 
-  async updatedUser(id: string, userUpadate: Partial<IUserEntity>) {
-    const userToUpadated = this.users.find((user) => user.id === id);
+  private async getUserById(id: string) {
+    const result = this.users.find((user) => user.id === id);
 
-    if (!userToUpadated) {
+    if (!result) {
       throw new Error('User does not exist');
     }
+    return result;
+  }
+
+  async updatedUser(id: string, userUpadate: Partial<IUserEntity>) {
+    const user = await this.getUserById(id);
 
     Object.entries(userUpadate).forEach(([key, value]) => {
       if (key === 'id') {
         return;
       }
-      userToUpadated[key] = value;
+      user[key] = value;
     });
+    return user;
+  }
+
+  async deleteUser(id: string) {
+    this.users = this.users.filter((user) => user.id !== id);
+    const userDeleted = this.getUserById(id);
+
+    return userDeleted;
   }
 }
